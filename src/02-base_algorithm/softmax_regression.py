@@ -1,5 +1,6 @@
 import d2lzh as d2l
 from mxnet import autograd, nd
+from matplotlib import pyplot as plt
 
 
 def softmax(x):
@@ -41,11 +42,11 @@ def accuracy(y_hat, y):
     return (y_hat.argmax(axis=1)) == y.astype('float32').mean().asscalar()
 
 
-def evaluate_accuracy(data_iter, net):
+def evaluate_accuracy(data_iter, net, num_inputs, W, b):
     acc_sum, n = 0.0, 0.0
     for X, y in data_iter:
         y = y.astype('float32')
-        acc_sum += (net(X).argmax(axis=1) == y).sum().asscalar()
+        acc_sum += (net(X, num_inputs, W, b).argmax(axis=1) == y).sum().asscalar()
         n += y.size
     return acc_sum / n
 
@@ -53,6 +54,9 @@ def evaluate_accuracy(data_iter, net):
 def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               num_inputs, W, b,
               params=None, lr=None, trainer=None):
+    """
+
+    """
     for epoch in range(num_epochs):
         train_loss_sum, train_acc_sum, n = 0.0, 0.0, 0
         for X, y in train_iter:
@@ -66,8 +70,23 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
                 trainer.step(batch_size)
             y = y.astype('float32')
             train_loss_sum += data_loss.asscalar()
-            train_acc_sum += (y_hat.argmax(axis=1) == y).sum().acccalar()
+            train_acc_sum += (y_hat.argmax(axis=1) == y).sum().asscalar()
             n += y.size
+        test_acc = evaluate_accuracy(test_iter, net, num_inputs, W, b)
+        print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
+              % (epoch + 1, train_loss_sum / n, train_acc_sum / n, test_acc))
+
+
+def show_fashion_mnist2(images, labels):
+    """Plot Fashion-MNIST images with labels."""
+    # use_svg_display()
+    _, figs = plt.subplots(1, len(images), figsize=(12, 12))
+    for f, img, lbl in zip(figs, images, labels):
+        f.imshow(img.reshape((28, 28)).asnumpy())
+        f.set_title(lbl)
+        f.axes.get_xaxis().set_visible(False)
+        f.axes.get_yaxis().set_visible(False)
+    plt.show()
 
 
 def main():
@@ -86,3 +105,19 @@ def main():
     b.attach_grad()
 
     num_epochs, lr = 5, 0.1
+    train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size,
+              num_inputs, W, b,
+              [W, b], lr)
+    for X, y in test_iter:
+        print(X, y)
+        break
+    true_labels = d2l.get_fashion_mnist_labels(y.asnumpy())
+    pred_labels = d2l.get_fashion_mnist_labels(net(X, num_inputs, W, b).argmax(axis=1).asnumpy())
+    titles = [true + '\n' + pred for true, pred in zip(true_labels, pred_labels)]
+
+
+    show_fashion_mnist2(X[0:9], titles[0:9])
+
+
+if __name__ == '__main__':
+    main()
