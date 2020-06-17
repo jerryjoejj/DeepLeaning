@@ -39,8 +39,8 @@ def main():
         for X, y in data_iter:
             with autograd.record():
                 data_loss = loss(net(X), y)
-                # 自动求梯度
-                data_loss.backward()
+            # 自动求梯度
+            data_loss.backward()
             trainer.step(batch_size)
         data_loss = loss(net(features), labels)
         print('epoch %d, loss: %f' % (epoch, data_loss.mean().asnumpy()))

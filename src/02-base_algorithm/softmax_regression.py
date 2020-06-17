@@ -94,7 +94,9 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
             with autograd.record():
                 y_hat = net(X, num_inputs, W, b)
                 data_loss = loss(y_hat, y).sum()
-                data_loss.backward()
+            # TODO 放在with里面和外面的区别
+            # 自动求梯度
+            data_loss.backward()
             if trainer is None:
                 d2l.sgd(params, lr, batch_size)
             else:
