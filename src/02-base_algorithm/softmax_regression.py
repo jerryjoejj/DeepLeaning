@@ -1,6 +1,7 @@
 import d2lzh as d2l
 from mxnet import autograd, nd
 from matplotlib import pyplot as plt
+from myutils.util import show_fashion_mnist2
 
 
 def softmax(x):
@@ -39,10 +40,27 @@ def cross_entropy(y_hat, y):
 
 
 def accuracy(y_hat, y):
-    return (y_hat.argmax(axis=1)) == y.astype('float32').mean().asscalar()
+    """
+    计算分类准确率
+    :param y_hat:
+    :param y:
+    :return:
+    """
+    # y_hat.argmax(axis=1) 返回矩阵y_hat每一行最大元素的索引
+    # mean() 求均值
+    return (y_hat.argmax(axis=1) == y.astype('float32')).mean().asscalar()
 
 
 def evaluate_accuracy(data_iter, net, num_inputs, W, b):
+    """
+    评价模型net在数据集data_iter上的准确率
+    :param data_iter:
+    :param net:
+    :param num_inputs:
+    :param W:
+    :param b:
+    :return:
+    """
     acc_sum, n = 0.0, 0.0
     for X, y in data_iter:
         y = y.astype('float32')
@@ -55,7 +73,20 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               num_inputs, W, b,
               params=None, lr=None, trainer=None):
     """
-
+    开始训练
+    :param net: 模型函数
+    :param train_iter: 训练数据
+    :param test_iter: 测试数据
+    :param loss: 损失函数
+    :param num_epochs: 迭代周期数
+    :param batch_size:
+    :param num_inputs:
+    :param W:
+    :param b:
+    :param params:
+    :param lr: 学习率
+    :param trainer:
+    :return:
     """
     for epoch in range(num_epochs):
         train_loss_sum, train_acc_sum, n = 0.0, 0.0, 0
@@ -75,18 +106,6 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
         test_acc = evaluate_accuracy(test_iter, net, num_inputs, W, b)
         print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f'
               % (epoch + 1, train_loss_sum / n, train_acc_sum / n, test_acc))
-
-
-def show_fashion_mnist2(images, labels):
-    """Plot Fashion-MNIST images with labels."""
-    # use_svg_display()
-    _, figs = plt.subplots(1, len(images), figsize=(12, 12))
-    for f, img, lbl in zip(figs, images, labels):
-        f.imshow(img.reshape((28, 28)).asnumpy())
-        f.set_title(lbl)
-        f.axes.get_xaxis().set_visible(False)
-        f.axes.get_yaxis().set_visible(False)
-    plt.show()
 
 
 def main():
@@ -114,8 +133,6 @@ def main():
     true_labels = d2l.get_fashion_mnist_labels(y.asnumpy())
     pred_labels = d2l.get_fashion_mnist_labels(net(X, num_inputs, W, b).argmax(axis=1).asnumpy())
     titles = [true + '\n' + pred for true, pred in zip(true_labels, pred_labels)]
-
-
     show_fashion_mnist2(X[0:9], titles[0:9])
 
 

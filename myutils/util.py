@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 
+
 def show_fashion_mnist2(images, labels):
     """Plot Fashion-MNIST images with labels."""
     # use_svg_display()
