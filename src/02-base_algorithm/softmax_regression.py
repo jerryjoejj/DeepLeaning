@@ -123,6 +123,7 @@ def main():
     W.attach_grad()
     b.attach_grad()
 
+    # 迭代周期数 学习率
     num_epochs, lr = 5, 0.1
     train_ch3(net, train_iter, test_iter, cross_entropy, num_epochs, batch_size,
               num_inputs, W, b,
