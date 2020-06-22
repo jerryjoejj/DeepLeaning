@@ -1,7 +1,7 @@
 import d2lzh as d2l
 from mxnet import autograd, nd
 from matplotlib import pyplot as plt
-from myutils.util import show_fashion_mnist2
+from myutils.myutils import show_fashion_mnist
 
 
 def softmax(x):
@@ -136,7 +136,7 @@ def main():
     true_labels = d2l.get_fashion_mnist_labels(y.asnumpy())
     pred_labels = d2l.get_fashion_mnist_labels(net(X, num_inputs, W, b).argmax(axis=1).asnumpy())
     titles = [true + '\n' + pred for true, pred in zip(true_labels, pred_labels)]
-    show_fashion_mnist2(X[0:9], titles[0:9])
+    show_fashion_mnist(X[0:9], titles[0:9])
 
 
 if __name__ == '__main__':

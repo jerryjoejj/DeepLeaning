@@ -11,3 +11,10 @@ def show_fashion_mnist2(images, labels):
         f.axes.get_xaxis().set_visible(False)
         f.axes.get_yaxis().set_visible(False)
     plt.show()
+
+
+def xygplot2(x_vals, y_vals, name):
+    plt.plot(x_vals.asnumpy(), y_vals.asnumpy())
+    plt.xlabel('x')
+    plt.ylabel(name + '(x)')
+    plt.show()

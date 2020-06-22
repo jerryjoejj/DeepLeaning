@@ -491,6 +491,7 @@ def show_fashion_mnist(images, labels):
         f.set_title(lbl)
         f.axes.get_xaxis().set_visible(False)
         f.axes.get_yaxis().set_visible(False)
+    plt.show()
 
 
 def show_images(imgs, num_rows, num_cols, scale=2):
@@ -651,14 +652,14 @@ def train_and_predict_rnn_gluon(model, num_hiddens, vocab_size, ctx,
                     char_to_idx))
 
 
-def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
+def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size, num_inputs,
               params=None, lr=None, trainer=None):
     """Train and evaluate a model with CPU."""
     for epoch in range(num_epochs):
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
         for X, y in train_iter:
             with autograd.record():
-                y_hat = net(X)
+                y_hat = net(X, num_inputs, params)
                 l = loss(y_hat, y).sum()
             l.backward()
             if trainer is None:

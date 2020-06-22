@@ -17,6 +17,7 @@ with autograd.record():
 
 xygplot(x, y, 'relu')
 # TODO 必须执行y.backward()，否则图形错误
+# 求梯度
 y.backward()
 xygplot(x, x.grad, 'grad of relu')
 
