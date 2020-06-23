@@ -38,7 +38,7 @@ def main():
     W2 = nd.random.normal(scale=0.01, shape=(num_hiddens, num_outputs))
     b2 = nd.zeros(num_outputs)
     # 附上梯度
-    params =[W1, b1, W2, b2]
+    params = [W1, b1, W2, b2]
     for param in params:
         param.attach_grad()
 
