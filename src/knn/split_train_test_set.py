@@ -4,11 +4,9 @@ Created on Tue Jun 23 16:04:29 2020
 
 @author: manai
 """
-from src.knn.read_data_set import file2matrix
-from src.knn.data_normalization import auto_norm
-from src.knn.knn import knn
-
-import numpy as np
+from myutils.read_data_set import file2matrix
+from myutils.data_normalization import auto_norm
+from myutils.knn import knn
 
 
 def main():

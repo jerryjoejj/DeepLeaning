@@ -659,7 +659,7 @@ def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size, num_inpu
         train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
         for X, y in train_iter:
             with autograd.record():
-                y_hat = net(X, num_inputs, params)
+                y_hat = net(X)
                 l = loss(y_hat, y).sum()
             l.backward()
             if trainer is None:
