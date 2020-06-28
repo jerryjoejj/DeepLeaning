@@ -652,7 +652,7 @@ def train_and_predict_rnn_gluon(model, num_hiddens, vocab_size, ctx,
                     char_to_idx))
 
 
-def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size, num_inputs,
+def train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
               params=None, lr=None, trainer=None):
     """Train and evaluate a model with CPU."""
     for epoch in range(num_epochs):

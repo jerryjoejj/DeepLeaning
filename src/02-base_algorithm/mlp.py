@@ -1,4 +1,3 @@
-import d2lzh as d2l
 from mxnet import nd
 from mxnet.gluon import loss as gloss
 import myutils as myutils
@@ -17,10 +16,9 @@ def net(x):
     """
     定义模型
     :param x:
-    :param num_inputs:
-    :param params:
     :return:
     """
+    # 使用main函数的方式进行调用，会在调用过程中改变维度
     x = x.reshape((-1, num_inputs))
     h = relu(nd.dot(x, params[0]) + params[1])
     return nd.dot(h, params[2]) + params[3]
