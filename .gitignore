@@ -23,6 +23,5 @@ production/
 *.log
 out/
 .idea/
-.gitgnore
-
-
+.gitignore
+*.pyc
