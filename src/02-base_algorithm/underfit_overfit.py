@@ -52,6 +52,12 @@ labels = (true_w[0] * poly_features[:, 0] +
 labels += nd.random.normal(scale=0.1, shape=labels.shape)
 
 num_epochs, loss = 100, gloss.L2Loss()
+# 三阶多项式函数拟合
+fit_and_plot(poly_features[:n_train, :], poly_features[n_train:, :],
+             labels[:n_train], labels[n_train:])
+# 欠拟合
 fit_and_plot(features[:n_train, :], features[n_train:, :],
              labels[:n_train], labels[n_train:])
-
+# 过拟合
+fit_and_plot(poly_features[0:2, :], poly_features[n_train:, :], labels[0:2],
+             labels[n_train:])

@@ -1,5 +1,4 @@
 import numpy as np
-import nn
 
 
 def file2matrix(filename):
