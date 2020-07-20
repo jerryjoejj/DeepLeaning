@@ -82,6 +82,7 @@ x = nd.random.uniform(shape=(2, 20))
 # net = FancyMLP()
 # net.initialize()
 # print(net(x))
+# Sequential类继承自Block类
 net = nn.Sequential()
 # 嵌套调用
 net.add(NestMLP(), nn.Dense(20), FancyMLP())
